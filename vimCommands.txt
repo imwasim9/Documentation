@@ -1,0 +1,30 @@
+***************************** Vim Editor ***************************************
+Default mode is esc mode
+**************** colon/command mode *************
+:wq - write and quit
+:q! - quit without saving
+:q  - just quit
+:set nu - display number
+:<line number> - cursor will go to that line
+:/<word-to-search-from-top>
+:?<word-to-search-from-bottom>
+:<line-number>d - deletes the line
+:<line-15, line-25>d - :15,25d - deletes the lines from 15 to 25
+:<line-10tline-15> - :10t15 - copies the line 10 and pastes in 15 (:10y -> :20 -> p(esc mode))
+:noh - not highlight the words searched for previously
+:28s/root/ROOT - substiute(replace) the first occurence of word root with ROOT in line 28
+:28s/root/ROOT/g - substiut(replace) the every occurence of word root with ROOT in line 28
+:%s/root/ROOT/g - substiute(replace) the every occurence of word root with ROOT in all lines
+ 
+******** ESC mode **********
+gg - takes cursor to the top of page
+shift + g - takes us bottom to the page
+u - undo the change(s)
+ctrl + r - redo the change(s)
+dd - delete the current line
+yy - yank (copies the current line)
+P - pastes below the current line
+shit + p - pastes above the current line
+
+**************************************** Linux command *******************************
+head -n 8 file.txt | tail -n 3 -> displays the lines 6 to 8 (formula is 8, 8-6+1)

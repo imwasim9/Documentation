@@ -1,0 +1,53 @@
+************** User Management *********************
+user -> group(s) -> Roles & Permissions
+
+1.create group
+2.create user
+3.add user to the group
+4.remove user from the group
+5.delete user
+6.delete group
+
+useradd wasim -> creates user wasim
+groupadd devops -> creates group devops
+
+id<user-name> -> gives the user details
+id wasim
+uid=1001(wasim) gid=1001(wasim) groups=1001(wasim)
+When we create a user a by default it will create a group by the username
+An user must have 1 primary and atleast 1 secondary group( may have more than one secondary groups too)
+
+cat /etc/passwd -> To check users in the linux system
+wasim:x:1001:1001::/home/wasim:/bin/bash
+username:pwd:uid:gid:description:userDir:login_shell
+cat /etc/group -> To check groups in the linux system
+cat /etc/shadow -> To see encrypted user passwords
+
+passwd <user-name> -> To set passwd to the user name
+By default in linux authentication is via ssh keys, to change it passwd instead of key, we need to modify ssh config
+cat /etc/ssh/sshd_config -> ssh configuration
+PasswordAuthentication no -> Change this value to yes
+vim /etc/ssh/sshd_config -> :/PasswordAuthentication
+sshd -t -> checks the syntax of ssh, should be careful while modifying this file.
+systemctl restart sshd
+
+gpasswd -d <user-name> <group-name> to delete the user from a particular group gpasswd(group membership management)
+
+id wasim -> wasim wasim wasim
+usermod -g devops wasim -> wasim devops devops
+usermod -aG operations wasim -> wasim devops operations (a : append G: secondary Group)
+
+**************** Files & Permissions ***********************
+
+Read    ->  4
+Write   ->  2
+Execute ->  1
+
+When we perform ls -l -> we see -rw-r--r-- which means -  rw-  r-- r-- (-:file d:dir,  readwrite-, read--, read--)
+																						user(u)   group(g) others(o)
+chmod g+w -> provide write access to group
+chmod ugo+r -> provide read access to user, group and others
+chmod 744 -> u :rwx, g :r, o :r																						
+
+
+

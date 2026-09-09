@@ -45,9 +45,9 @@ Execute ->  1
 
 When we perform ls -l -> we see -rw-r--r-- which means -  rw-  r-- r-- (-:file d:dir,  readwrite-, read--, read--)
 																						user(u)   group(g) others(o)
-chmod g+w -> provide write access to group
-chmod ugo+r -> provide read access to user, group and others
-chmod 744 -> u :rwx, g :r, o :r																						
+chmod g+w file/folder Name-> provide write access to group
+chmod ugo+r file/folder Name -> provide read access to user, group and others
+chmod 744 file/folder Name -> u :rwx, g :r, o :r																						
 
 
 

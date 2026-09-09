@@ -2,6 +2,7 @@
 Default mode is esc mode
 **************** colon/command mode *************
 :wq - write and quit
+:wq! - write and force quit
 :q! - quit without saving
 :q  - just quit
 :set nu - display number

@@ -36,6 +36,7 @@ gpasswd -d <user-name> <group-name> to delete the user from a particular group g
 id wasim -> wasim wasim wasim
 usermod -g devops wasim -> wasim devops devops
 usermod -aG operations wasim -> wasim devops operations (a : append G: secondary Group)
+gpasswd -d wasim operations
 
 **************** Files & Permissions ***********************
 
@@ -49,5 +50,78 @@ chmod g+w file/folder Name-> provide write access to group
 chmod ugo+r file/folder Name -> provide read access to user, group and others
 chmod 744 file/folder Name -> u :rwx, g :r, o :r																						
 
+File/Folder ownership:
+chmod -> either the owner/root can change the file permissions
+chown <user>:<group> file/folder -> not even the owner can change the ownership of a file/folder, only root user.
+chown -R <user>:<group> file/folder, chown -R :<group> file/folder, chown -R <user> file/folder
 
+When you create an user he/she should login to the linux server using keys,
+user will create public,private key using ssh-keygen -f <key-name>
+ssh-keygen -f daws-86s -> daws-86s.pub, daws-86s (private key) -> user sends pub key to the admin
+-> admin pastes the key in the user home/wasim/.ssh folder 
+
+1. useradd wasim
+2. admin should .ssh folder in /home/wasim
+3. permissions should be 700 for .ssh means only owner has full access
+4. .ssh ownership should only be wasim including group
+5. create authorized_keys inside .ssh with max permissions of 600 and again ownership should be only wasim
+6. keep the public key from wasim inside this authorized_keys file
+
+ssh -i wasim wasim@2.34.345.567
+
+/etc/sudoers -> sudoers information
+vimsudo -> edit safely with syntax checks
+
+how to give sudo access to users?
+
+add user to the wheel group and then modify /etc/sudoers wheel group without passwd
+
+usermod -aG wheel wasim
+cat /etc/sudoers -> uncomment the line %wheel ALL=(ALL) NOPASSWD: ALL
+
+
+ 
+
+*************************************** Package Management **********************
+package managers -> dnf (dandifed yum) , rpm (red hat package management)
+Why use dnf instead of rpm? -> rpm installs a package directly but does not automatically resolve dependencies.
+dnf uses repositories and automatically downloads and installs all required dependencies, making package management easier and safer.
+
+dnf is the command to install/remove the packages from server
+previously called as yum
+RHEL => dnf install <package-name>
+Ubuntu => apt-get install <package-name>
+
+/etc/yum.repos.d
+
+dnf list available | wc -l  -> not installed but available in web repos
+dnf list installed -> lists the packages already installed in the server
+
+install remove update info
+
+dnf repolist -> lists enabled repositories
+dnf repolist all -> lists all repositories
+
+dnf search nginx -> search the package
+dnf list nginx -> search for the exact package
+dnf info nginx -> show package details
+sudo dnf install nginx, to install multiple package -> sudo dnf install git wget curl unzip
+sudo dnf install nginx-1.24.0 
+dnf check-update, sudo dnf update -> updates all packages , sudo dnf update nginx -> updates only nginx package
+sudo dnf remove nginx -> remove package, sudo dnf autoremove -> remove unused dependecies
+ 
+
+
+
+******************************** Service Management ******************************
+
+nginx -> http webserver
+systemctl start nginx
+systemctl status nginx
+systemctl stop nginx
+systemctl restart nginx
+systemctl enable nginx -> whenever system restarted automatically this nginx will run
+systemctl disable nginx
+
+systemctl list-units --type=service --state=running -> provides the list of running services in linux server
 

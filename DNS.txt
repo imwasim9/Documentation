@@ -1,0 +1,51 @@
+==========================================
+DOMAIN NAME SYSTEM
+1. Translates human readable domain names into ip addresses, without dns user need to remember the ip addresses.
+2. flow - Browser cache check -> OS DNS cache check -> Recursive Resolver (ISP or company DNS) -> Root DNS Server -> TLD Server (.com)
+   -> Authoritative DNS Server -> IP returned -> Browser connects to destination
+3. What is an Authoritative DNS Server? -> The DNS server that contains the actual DNS records for a domain. (A,MX, TXT Records)
+4. A record -> maps hostname to ipv4 address (wasdaws.shop -> 192.168.1.10)
+5. AAAA record -> maps hostname to ipv6 (wasdaws.shop -> 2001:db8::1)
+6. CNAME -> Alias record www.example.com -> example.com **can CNAME point to ipaddress - No, only it points to another domain.
+7. MX Record -> mail exchange record used by mail servers (example.com -> mail.example.com)
+8. NS Record -> Specifies authorative nameservers (ns-123.awsdns.com)
+9. Reverse DNS lookup -> PTR records are used (when we input ip address -> domain name)
+10. When would you use a lower TTL? -> Before: Migration, blue-green deployment, Disaster-Recovery switch
+11. Route53 -> AWS managed DNS service (Domain registration, DNS management, Health checks, Traffic routing, Failover)
+12. DNS uses port 53 of UDP/TCP.
+13. public, private hosted zone -> accessible over internet(example.com), only accessible inside VPC(internal.company.local)
+14. Can one Route53 Hosted Zone be linked to multiple VPCs? -> Yes, Private Hosted Zone can associate multiple VPCs.
+15. What are Route53 Routing Policies? -> These are methods used to route traffic (Simple, Weighted, Latency, Failover, Geolocation, Geoproximity, Multi-value)
+16. What is weighted routing -> traffic distributed by percentage Server A = 20%, Server B = 80%(used for canary deployment)
+17. What is Latency routing -> Routes users to lowest latency region (India mumbai, US virginia)
+18. What is Failover rotuing -> Primary and Secondary site. Used in Disaster-Recovery. Primary healthy? yes - use primary server, no - use secondary.
+19. What is Gelocation routing -> user in india routes to amazon.in, user in us routes to amazon.us
+20. What is Route53 health check -> monitors endpoint availability(checks http, https, tcp) For automatic failover when primary site is down, traffic redirected automatically.
+21. How do you secure DNS? -> DNSSEC, IAM least privilege, Change control, Logging, CloudTrail audting, Restrict hosted zone updates.
+    DNSSEC -> DNS Security Extensions - prevents DNS spoofing, DNS Cache poisoning, man-in-the-middle attacks.
+22. What is DNS spoofing? -> Attacker returns fake DNS response, bank.com -> redirected to malicious ip.
+23. DNS cache poisoning? -> Corrupting resolver(isp) cache with fake DNS records. Users are redirected to attacker-controlled websites.
+24. How would you audit Route53 changes? -> using CloudTrail track the record creation, record deletion, hostedzone changes.
+25. Least Privilege Route53 IAM Policy? -> Avoid route53:*, use route53:ChangeResourceRecordSets, route53:ListHostedZones, route53:GetHostedZone
+26. How does DNS work inside Kubernetes -> CoreDNS provides service discovery, frontend.default.svc.cluster.local -> resolves to service ip.
+27. What is CoreDNS? -> DNS server running inside k8s cluster. provides Pod -> Service Resolution
+28. How would you expose Kubernetes application using Route53? Route53|ALB|Ingress Controller|K8s Service|Pods
+29. Users report application is unreachable. DNS issue or application issue? -
+    nslookup wasdaws.shop|dig wasdaws.shop|curl catalogue.wasdaws.shop|telnet host 443
+    process -> verify DNS resolution, Verify ip reachable, Verify LB, Verify app.
+=========================================================================
+Explain complete DNS resolution flow.
+Difference between Recursive, Resolver and Authoritative DNS.
+Difference between A record and CNAME.
+What happens if TTL is 24 hours?
+How Route53 health checks work.
+Route53 failover architecture.
+DNSSEC and DNS poisoning.
+Public vs Private Hosted Zones.
+Blue-Green deployment with Route53.
+Route53 integration with ALB, CloudFront, EKS.
+How would you troubleshoot DNS issues in production?
+How do you secure DNS infrastructure in AWS?
+Weighted routing vs Latency routing.
+Route53 cost optimization considerations.
+Multi-region disaster recovery using Route53.	

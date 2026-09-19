@@ -29,3 +29,7 @@ shit + p - pastes above the current line
 
 **************************************** Linux command *******************************
 head -n 8 file.txt | tail -n 3 -> displays the lines 6 to 8 (formula is 8, 8-6+1)
+
+
+
+
